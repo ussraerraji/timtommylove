@@ -142,28 +142,7 @@
       }
     }
 
-    .image-container {
-      position: relative;
-      display: inline-block;
-      margin-top: 20px;
-      opacity: 0;
-      animation: fadeInUp 1s ease forwards 1s;
-    }
 
-    .celebration-gif {
-      width: 100%;
-      max-width: 300px;
-      height: auto;
-      border-radius: 20px;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease;
-      border: 3px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .celebration-gif:hover {
-      transform: scale(1.05) rotate(2deg);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    }
 
     .emoji-rain {
       position: absolute;
@@ -236,6 +215,171 @@
       transform: translateY(0);
     }
 
+    .special-image-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.5s ease;
+    }
+
+    .special-image-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .special-image-container {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      animation: imageAppear 0.8s ease-out forwards;
+    }
+
+    @keyframes imageAppear {
+      0% {
+        transform: scale(0.3) rotate(-15deg);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1.1) rotate(3deg);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+      }
+    }
+
+    .special-image {
+      width: 100%;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 25px 50px rgba(255, 255, 255, 0.2);
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      0% {
+        box-shadow: 0 25px 50px rgba(255, 255, 255, 0.2), 0 0 30px rgba(255, 215, 0, 0.5);
+      }
+      100% {
+        box-shadow: 0 25px 50px rgba(255, 255, 255, 0.4), 0 0 50px rgba(255, 215, 0, 0.8);
+      }
+    }
+
+    .close-button {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .close-button:hover {
+      transform: scale(1.1) rotate(90deg);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .fireworks {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .firework {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      animation: fireworkExplode 1.5s ease-out forwards;
+    }
+
+    @keyframes fireworkExplode {
+      0% {
+        transform: scale(0);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
+
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #ffd93d;
+      border-radius: 50%;
+      animation: sparkle 2s ease-in-out infinite;
+    }
+
+    @keyframes sparkle {
+      0%, 100% {
+        transform: scale(0) rotate(0deg);
+        opacity: 0;
+      }
+      50% {
+        transform: scale(1) rotate(180deg);
+        opacity: 1;
+      }
+    }
+
+    .heart-float {
+      position: absolute;
+      font-size: 30px;
+      animation: heartFloat 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes heartFloat {
+      0% {
+        transform: translateY(0) scale(0);
+        opacity: 0;
+      }
+      20% {
+        transform: translateY(-20px) scale(1);
+        opacity: 1;
+      }
+      80% {
+        transform: translateY(-100px) scale(1.2);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-150px) scale(0);
+        opacity: 0;
+      }
+    }
+
     /* Responsive design */
     @media (max-width: 768px) {
       .main-card {
@@ -254,9 +398,7 @@
         padding: 25px 15px;
       }
       
-      .celebration-gif {
-        max-width: 250px;
-      }
+
     }
 
     /* Dark mode media query */
@@ -277,9 +419,18 @@
         <h1>❤️ Joyeux Anniversaire Timtom ❤️</h1>
         <p class="message">Kanbghiik bzaaaaf w lah ykhliik lya ya ahssan timtom f l3alam❤️!</p>
         
+
         
         <button class="interactive-button" onclick="celebrate()">🎉 Célébrer ! 🎉</button>
       </div>
+    </div>
+  </div>
+
+  <div class="special-image-overlay" id="imageOverlay">
+    <div class="special-image-container">
+      <img src="https://i.postimg.cc/9Mqpwj4x/Whats-App-Image-2025-07-07-01-32-21-54b3dabb.jpg" alt="Photo spéciale d'anniversaire" class="special-image">
+      <button class="close-button" onclick="closeImage()">×</button>
+      <div class="fireworks" id="fireworks"></div>
     </div>
   </div>
 
@@ -321,6 +472,7 @@
     function celebrate() {
       const button = document.querySelector('.interactive-button');
       const card = document.querySelector('.main-card');
+      const overlay = document.getElementById('imageOverlay');
       
       // Create burst effect
       for (let i = 0; i < 12; i++) {
@@ -348,6 +500,82 @@
       // Add celebration class
       card.classList.add('celebrating');
       setTimeout(() => card.classList.remove('celebrating'), 1000);
+      
+      // Show special image with delay
+      setTimeout(() => {
+        overlay.classList.add('active');
+        createFireworks();
+        createSparkles();
+        createFloatingHearts();
+      }, 800);
+    }
+
+    // Close image function
+    function closeImage() {
+      const overlay = document.getElementById('imageOverlay');
+      overlay.classList.remove('active');
+      
+      // Clear effects
+      const fireworks = document.getElementById('fireworks');
+      fireworks.innerHTML = '';
+    }
+
+    // Create fireworks effect
+    function createFireworks() {
+      const fireworks = document.getElementById('fireworks');
+      const colors = ['#ff6b6b', '#ffd93d', '#6bcf7f', '#4d9de0', '#9c88ff', '#ff9a9e'];
+      
+      for (let i = 0; i < 15; i++) {
+        setTimeout(() => {
+          const firework = document.createElement('div');
+          firework.className = 'firework';
+          firework.style.left = Math.random() * 100 + '%';
+          firework.style.top = Math.random() * 100 + '%';
+          firework.style.background = colors[Math.floor(Math.random() * colors.length)];
+          firework.style.animationDelay = Math.random() * 0.5 + 's';
+          fireworks.appendChild(firework);
+          
+          setTimeout(() => firework.remove(), 1500);
+        }, i * 200);
+      }
+    }
+
+    // Create sparkles effect
+    function createSparkles() {
+      const fireworks = document.getElementById('fireworks');
+      
+      for (let i = 0; i < 25; i++) {
+        setTimeout(() => {
+          const sparkle = document.createElement('div');
+          sparkle.className = 'sparkle';
+          sparkle.style.left = Math.random() * 100 + '%';
+          sparkle.style.top = Math.random() * 100 + '%';
+          sparkle.style.animationDelay = Math.random() * 2 + 's';
+          fireworks.appendChild(sparkle);
+          
+          setTimeout(() => sparkle.remove(), 2000);
+        }, i * 100);
+      }
+    }
+
+    // Create floating hearts effect
+    function createFloatingHearts() {
+      const fireworks = document.getElementById('fireworks');
+      const hearts = ['💖', '💕', '💗', '💓', '💘'];
+      
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.className = 'heart-float';
+          heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+          heart.style.left = Math.random() * 90 + '%';
+          heart.style.bottom = '0';
+          heart.style.animationDelay = Math.random() * 1 + 's';
+          fireworks.appendChild(heart);
+          
+          setTimeout(() => heart.remove(), 3000);
+        }, i * 300);
+      }
     }
 
     // Add burst animation
